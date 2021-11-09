@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create new car</title>
 </head>
 <body>
 <h1>New car</h1>
-<form name="auth" method="post" action="/">
+<form name="auth" method="post" action="/create">
     <p><b>Model</b><br>
         <input type="hidden" name="action" value="createNew">
         <input type="text" size="40" name = "modelName" value="">

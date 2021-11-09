@@ -13,13 +13,13 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    protected int id;
-    protected String manufacturedName;
-    protected String engine;
-    protected String modelName;
-    protected String wheel;
-    protected String transmission;
-    protected String gear; //?
+    public int id;
+    public String manufacturedName;
+    public String engine;
+    public String modelName;
+    public String wheel;
+    public String transmission;
+    public String gear; //?
 
     public void setManufacturerName(String manufacturerName) {
         this.manufacturedName = manufacturerName;
@@ -33,9 +33,10 @@ public class Car {
         this.id = id;
     }
 
+    public Car(){}
 
 
-    Car(String modelName, String manufacturedName, String engine, String wheel, String transmission, String gear){
+    Car (String modelName, String manufacturedName, String engine, String wheel, String transmission, String gear){
         this.engine=engine;
         this.manufacturedName=manufacturedName;
         this.modelName=modelName;

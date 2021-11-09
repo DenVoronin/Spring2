@@ -4,20 +4,22 @@ package cars;
 import cars.Car;
 import cars.Engine;
 import cars.services.DAO;
+
 import cars.services.ServiceForDiesel;
 import cars.services.ServiceForPetrol;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-@RestController
+@org.springframework.stereotype.Controller
 
 public class Controller {
 
@@ -33,17 +35,29 @@ public class Controller {
         this.dao = dao;
     }
 
-    @PostMapping(value = "/")
-    public RedirectView create8(@ModelAttribute Car car)  {
-        System.out.println(car.toString());
-        DAO.newCar(car);
-        return new RedirectView("/index.html");
+
+
+    @RequestMapping(value = {"/create"} , method = RequestMethod.GET)
+    public String createOpen(@ModelAttribute Car car)  {
+
+
+        return "create";
 
     }
 
-    @GetMapping(value = "/")
-    public RedirectView hello(){
-        return new RedirectView("/index.html");
+    @PostMapping ("/")
+    public String create(@ModelAttribute Car car)  {
+        System.out.println(car.toString());
+         DAO.newCar(car);
+        return "create";
+
+    }
+    @RequestMapping(value = { "/index" , "/"}, method = RequestMethod.GET)
+    public String index(Model model){
+        ArrayList<Car> cars = new ArrayList<>(DAO.loadAllData(cars.Car.class));
+        cars.stream().forEach(e -> System.out.println(e.toString()));
+        model.addAttribute("cars", cars);
+      return "index";
     }
 
    // @GetMapping(value = "/fuel/check/")
