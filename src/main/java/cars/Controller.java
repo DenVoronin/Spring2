@@ -46,7 +46,12 @@ public class Controller {
     }
 
     @PostMapping ("/")
-    public String create(@ModelAttribute Car car)  {
+    public String create(@RequestParam String modelName,@RequestParam String manufacturedName,
+                         @RequestParam String engine,@RequestParam String wheel,
+                         @RequestParam String transmission,@RequestParam String gear)
+    {
+        Car car = new Car(modelName,manufacturedName,engine,wheel,transmission,gear);
+
         System.out.println(car.toString());
          DAO.newCar(car);
         return "create";

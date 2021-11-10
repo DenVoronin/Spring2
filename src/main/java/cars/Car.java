@@ -21,8 +21,28 @@ public class Car {
     public String transmission;
     public String gear; //?
 
-    public void setManufacturerName(String manufacturerName) {
-        this.manufacturedName = manufacturerName;
+    public String getWheel() {
+        return wheel;
+    }
+
+    public String getTransmission() {
+        return transmission;
+    }
+
+    public String getManufacturedName() {
+        return manufacturedName;
+    }
+
+    public String getEngine() {
+        return engine;
+    }
+
+    public String getGear() {
+        return gear;
+    }
+
+    public void setManufacturerName(String manufacturedName) {
+        this.manufacturedName = manufacturedName;
     }
 
     public void setModelName(String modelName) {
