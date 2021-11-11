@@ -16,6 +16,7 @@
     <th>Engine</th>
     <th>Wheel</th>
     <th>Gear</th>
+        <th>Action</th>
 </tr>
     <tr th:each ="car : ${cars}">
     <td th:utext="${car.id}">...</td>
@@ -24,8 +25,14 @@
     <td th:utext="${car.engine}">...</td>
     <td th:utext="${car.wheel}">...</td>
     <td th:utext="${car.gear}">...</td>
+        <td>
+
+            <a th:href="@{/edit/{id}(id=${car.id})}">edit</a>
+            <a th:href="@{/delete/{id}(id=${car.id})}">delete</a>
+        </td>
 </tr>
 </table>
+<p><a href="/">Refresh</a></p>
 <p><a href="create">Make new car</a></p>
 </body>
 </html>
