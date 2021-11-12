@@ -7,6 +7,11 @@
 <body>
 
 <h2>Cars list</h2>
+<p>Step1: Create engine</p>
+<p>Step2: Add this engine in new car or use in edit </p>
+<table border="1">
+    <tr>
+        <td>
 <table border="1">
 
     <tr>
@@ -30,9 +35,43 @@
             <a th:href="@{/edit/{id}(id=${car.id})}">edit</a>
             <a th:href="@{/delete/{id}(id=${car.id})}">delete</a>
         </td>
-</tr>
+
+
+
+
 </table>
-<p><a href="/">Refresh</a></p>
-<p><a href="create">Make new car</a></p>
+            <p><a href="create">Make new car</a></p>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td>
+            <h3>Engines list</h3>
+<table border="1">
+
+    <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each ="engine : ${engines}">
+        <td th:utext="${engine.id}">...</td>
+        <td th:utext="${engine.name}">...</td>
+        <td th:utext="${engine.engineType}">...</td>
+
+        <td>
+
+            <a th:href="@{/edit/engine/{id}(id=${engine.id})}">edit</a>
+            <a th:href="@{/delete/engine/{id}(id=${engine.id})}">delete</a>
+        </td>
+    </tr>
+</table>
+<p><a href="createEngine">Make new engine</a></p>
+        </td>
+    </tr>
+</table>
+<p></h2><a href="/"><h2>REFRESH</h2></a></p>
 </body>
 </html>

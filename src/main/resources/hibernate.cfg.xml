@@ -20,5 +20,6 @@
         <property name="hbm2ddl.auto">validate</property>
 
         <mapping class="cars.Car"></mapping>
+        <mapping class="cars.Engine"></mapping>
     </session-factory>
 </hibernate-configuration>

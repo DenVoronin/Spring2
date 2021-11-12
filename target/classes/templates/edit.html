@@ -20,11 +20,15 @@
     </p>
     <p><b>Engine</b><br>
 
-    <p><select name="engine" size="2" multiple >
-        <option selected value="Diesel">Diesel</option>
-        <option value="Petrol">Petrol</option>
-
+    <p>
+    <select name="engine">
+        <option value=""> -- </option>
+        <option th:each="engine : ${engines}"
+                th:value="${engine.name}"
+                th:utext="${engine.name}"/>
     </select>
+</p>
+
     <p><b>Gear</b><br>
         <input type="text" size="40" name ="gear" th:value="${car.gear}">
     </p>
