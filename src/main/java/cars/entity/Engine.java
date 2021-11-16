@@ -1,4 +1,4 @@
-package cars;
+package cars.entity;
 
 import javax.persistence.*;
 
@@ -9,12 +9,18 @@ public class Engine {
         Petrol,
         Diesel
     }
+
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public
+
     int id;
     String name;
+    @Basic
+    @Column(name = "engine_type")
     String engineType;
-
     public int getId() {
         return id;
     }

@@ -7,8 +7,11 @@
 <body>
 
 <h2>Cars list</h2>
+<div>
 <p>Step1: Create engine</p>
 <p>Step2: Add this engine in new car or use in edit </p>
+<p>Attention: If the engine is added to the car, it cannot be removed </p>
+</div>
 <table border="1">
     <tr>
         <td>
@@ -27,8 +30,8 @@
     <td th:utext="${car.id}">...</td>
     <td th:utext="${car.manufacturedName}">...</td>
     <td th:utext="${car.modelName}">...</td>
-    <td th:utext="${car.engine}">...</td>
-    <td th:utext="${car.wheel}">...</td>
+        <td th:utext="${car.engine}">...</td>
+        <td th:utext="${car.wheel}">...</td>
     <td th:utext="${car.gear}">...</td>
         <td>
 

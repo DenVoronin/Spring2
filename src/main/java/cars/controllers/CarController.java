@@ -1,41 +1,43 @@
-package cars;
+package cars.controllers;
 
-
-import cars.services.DAO;
-
-import cars.services.DAOForEngine;
-
+import cars.entity.Car;
+import cars.entity.Engine;
+import cars.services.impl.CarServiceImpl;
+import cars.services.impl.EngineServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
+@Component
 
 @org.springframework.stereotype.Controller
 
-public class Controller {
+public class CarController {
 
 
-    private DAO dao;
-    private DAOForEngine daoForEngine;
+    private CarServiceImpl carServiceimpl;
+    private EngineServiceImpl engineServiceImpl;
 
     @Autowired
-    public Controller( DAO dao,DAOForEngine daoForEngine  )
+    public CarController(CarServiceImpl carServiceimpl, EngineServiceImpl engineServiceImpl  )
     {
 
-        this.dao = dao;
-        this.daoForEngine = daoForEngine;
+        this.carServiceimpl = carServiceimpl;
+        this.engineServiceImpl = engineServiceImpl;
     }
 
 
 
     @RequestMapping(value = {"/create"} , method = RequestMethod.GET)
-    public String createOpen(@ModelAttribute Car car,Model modelE)  {
+    public String createOpen(@ModelAttribute Car car, Model modelE)  {
 
-        ArrayList<Engine> engines = new ArrayList<>(DAOForEngine.loadAllData(cars.Engine.class));
+        ArrayList<Engine> engines = new ArrayList<>(engineServiceImpl.getAll());
         engines.stream().forEach(e -> System.out.println(e.toString()));
         modelE.addAttribute("engines", engines);
         return "create";
@@ -44,32 +46,34 @@ public class Controller {
 
     @RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") String id,Model model,Model modelE) {
-        ArrayList<Engine> engines = new ArrayList<>(DAOForEngine.loadAllData(cars.Engine.class));
+        ArrayList<Engine> engines = new ArrayList<>(engineServiceImpl.getAll());
         engines.stream().forEach(e -> System.out.println(e.toString()));
         modelE.addAttribute("engines", engines);
-        Car car = DAO.findCarById(Integer.parseInt(id));
+        Car car = carServiceimpl.getById(Integer.parseInt(id));
         model.addAttribute("car", car);
         return "edit";
     }
+
     @PostMapping ("/create")
     public String update(@RequestParam String id,@RequestParam String modelName,@RequestParam String manufacturedName,
-                         @RequestParam String engine,@RequestParam String wheel,
+                         @RequestParam int engine,@RequestParam String wheel,
                          @RequestParam String transmission,@RequestParam String gear) {
-        Car car = new Car(modelName, manufacturedName, engine, wheel, transmission, gear);
+        Car car = new Car(modelName, manufacturedName, engineServiceImpl.getById(engine), wheel, transmission, gear);
          car.id=Integer.parseInt(id);
       //  System.out.println(car.toString());
-        DAO.update(car);
+        carServiceimpl.editCar(car);
         return "index";
     }
+
         @PostMapping ("/")
         public String create(@RequestParam String modelName,@RequestParam String manufacturedName,
-            @RequestParam String engine,@RequestParam String wheel,
+            @RequestParam int engine,@RequestParam String wheel,
             @RequestParam String transmission,@RequestParam String gear)
         {
-            Car car = new Car(modelName,manufacturedName,engine,wheel,transmission,gear);
+            Car car = new Car(modelName,manufacturedName,engineServiceImpl.getById(engine),wheel,transmission,gear);
 
             System.out.println(car.toString());
-            DAO.newCar(car);
+            carServiceimpl.newCar(car);
             return "create";
     }
 
@@ -77,10 +81,11 @@ public class Controller {
 
     @RequestMapping(value = { "/index" , "/"}, method = RequestMethod.GET)
     public String index(Model model, Model modelE){
-        ArrayList<Car> cars = new ArrayList<>(DAO.loadAllData(cars.Car.class));
+
+        ArrayList<Car> cars = new ArrayList<>(carServiceimpl.getAll());
         cars.stream().forEach(e -> System.out.println(e.toString()));
         model.addAttribute("cars", cars);
-        ArrayList<Engine> engines = new ArrayList<>(DAOForEngine.loadAllData(cars.Engine.class));
+        ArrayList<Engine> engines = new ArrayList<>(engineServiceImpl.getAll());
         engines.stream().forEach(e -> System.out.println(e.toString()));
         model.addAttribute("engines", engines);
       return "index";
@@ -88,8 +93,8 @@ public class Controller {
 
     @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
     public String deleteFilm(@PathVariable("id") String id) {
-
-        DAO.delete(DAO.findCarById(Integer.parseInt(id)));
+        carServiceimpl.getById(Integer.parseInt(id)).engine=null;
+        carServiceimpl.delete(Integer.parseInt(id));
 
         return "index";
     }

@@ -20,7 +20,7 @@
     <select name="engine">
         <option value=""> -- </option>
         <option th:each="engine : ${engines}"
-                th:value="${engine.name}"
+                th:value="${engine.id}"
                 th:utext="${engine.name}"/>
     </select> </p>
 

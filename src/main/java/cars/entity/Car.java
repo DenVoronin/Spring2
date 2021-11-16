@@ -1,7 +1,11 @@
-package cars;
+package cars.entity;
 
 
 
+
+import cars.repository.EngineRepository;
+import cars.services.impl.EngineServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
@@ -14,8 +18,14 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     public int id;
+    @Basic
+    @Column(name = "manufactured_name")
     public String manufacturedName;
-    public String engine;
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "engine")
+    public Engine engine;
+    @Basic
+    @Column(name = "model_name")
     public String modelName;
     public String wheel;
     public String transmission;
@@ -34,7 +44,12 @@ public class Car {
     }
 
     public String getEngine() {
-        return engine;
+        return
+            "<strong> Name: </strong>"
+            +engine.name
+            + "<br>"
+                    + "<strong> Type: </strong>"
+            +engine.engineType;
     }
 
     public String getGear() {
@@ -56,8 +71,10 @@ public class Car {
     public Car(){}
 
 
-    Car (String modelName, String manufacturedName, String engine, String wheel, String transmission, String gear){
-        this.engine=engine;
+    public Car(String modelName, String manufacturedName, Engine engine, String wheel, String transmission, String gear){
+
+
+        this.engine= engine;
         this.manufacturedName=manufacturedName;
         this.modelName=modelName;
         this.gear=gear;
@@ -79,6 +96,6 @@ public class Car {
 
     public String toString() {
 
-        return String.join(" ", manufacturedName, modelName, engine,wheel, gear, transmission );
+        return String.join(" ", manufacturedName, modelName, engine.toString(),wheel, gear, transmission );
     }
 }
